@@ -10,7 +10,6 @@
 #define MOTOR_CONFIG_H_
 
 
-#include "DIO_interface.h"
 
 #define MOTOR_PORT DIO_PORTD
 

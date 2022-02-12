@@ -22,11 +22,17 @@ MOTOR 2 DIR B PIN 7
 /**MACROS FOR USAGE IN DIR***/
 #define FWD HIGH
 #define REV LOW
-
-void MOTOR_init(uint8_t numMotor);// numMotor (initalize Direction pins only (PWM initializes enable pins inside them))
-void MOTOR_speed(uint8_t dutyCycle);//  30/60/90 (Start PWM and initialize duty cycle)
-void MOTOR_direction(uint8_t numMotor, uint8_t DIR);//  numMotor/(FWD,REV) (Set direction of specified motor) i.e (MOTOR_1, FWD) meaning motor 1, move forward
-void MOTOR_off(uint8_t numMotor);// stop specified motor (writes LOW on DIR data pins)
+/*
+typedef enum
+{
+	E_NOK,
+	E_OK
+}ERROR_STATUS_t;
+*/
+ERROR_STATUS_t MOTOR_init(uint8_t numMotor);// numMotor (initialize Direction pins only (PWM initializes enable pins inside them))
+ERROR_STATUS_t MOTOR_speed(uint8_t dutyCycle);//  30/60/90 (Start PWM and initialize duty cycle)
+ERROR_STATUS_t MOTOR_direction(uint8_t numMotor, uint8_t DIR);//  numMotor/(FWD,REV) (Set direction of specified motor) i.e (MOTOR_1, FWD) meaning motor 1, move forward
+ERROR_STATUS_t MOTOR_off(uint8_t numMotor);// stop specified motor (writes LOW on DIR data pins)
 
 
 
