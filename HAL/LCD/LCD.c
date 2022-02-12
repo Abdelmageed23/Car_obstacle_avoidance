@@ -21,7 +21,7 @@ static uint8_t LCD_init_state = STATE_A;
 // ********* FUNCTIONS IMPLMENTATION **********
 
 // function to intialize the LCD with the configured pins
-ERROR_STATUS_t LCD_vidInit(void)
+ERROR_STATUS_t LCD_Init(void)
 {
 	if (LCD_Status == LCD_NOT_INITIALIZED)
 	{
@@ -61,11 +61,11 @@ ERROR_STATUS_t LCD_vidInit(void)
 				_delay_us(500);
 				LCD_Status = LCD_INITIALIZED;
 
-				LCD_vidWriteCommand(0b00101000);
+				LCD_WriteCommand(0b00101000);
 				_delay_us(250);
-				LCD_vidWriteCommand(0b00001100);
+				LCD_WriteCommand(0b00001100);
 				_delay_us(250);
-				LCD_vidWriteCommand(0b00000001);
+				LCD_WriteCommand(0b00000001);
 				_delay_us(250);
 			}
 			else
@@ -85,7 +85,7 @@ ERROR_STATUS_t LCD_vidInit(void)
 }
 
 // function to send a command to LCD
-ERROR_STATUS_t LCD_vidWriteCommand(uint8_t command)
+ERROR_STATUS_t LCD_WriteCommand(uint8_t command)
 {
 	if (LCD_Status == LCD_NOT_INITIALIZED)
 	{
@@ -122,7 +122,7 @@ ERROR_STATUS_t LCD_vidWriteCommand(uint8_t command)
 }
 
 // function that writes  one element on the LCD
-ERROR_STATUS_t LCD_vidWriteData(uint8_t data)
+ERROR_STATUS_t LCD_WriteData(uint8_t data)
 {
 	if (LCD_Status == LCD_NOT_INITIALIZED)
 	{
@@ -158,7 +158,7 @@ ERROR_STATUS_t LCD_vidWriteData(uint8_t data)
 	}
 }
 // function to write string on the LCD
-ERROR_STATUS_t LCD_vidWriteString(uint8_t *string)
+ERROR_STATUS_t LCD_WriteString(uint8_t *string)
 {
 	if (string == NULL_PTR)
 	{
@@ -175,7 +175,7 @@ ERROR_STATUS_t LCD_vidWriteString(uint8_t *string)
 		uint8_t index = 0;
 		while (string[index] != 0)
 		{
-			LCD_vidWriteData(string[index]);
+			LCD_WriteData(string[index]);
 			index++;
 		}
 		return E_OK;
@@ -183,7 +183,7 @@ ERROR_STATUS_t LCD_vidWriteString(uint8_t *string)
 }
 
 // function to write a number on the LCD
-ERROR_STATUS_t LCD_vidWriteNumber(uint32_t num)
+ERROR_STATUS_t LCD_WriteNumber(uint32_t num)
 {
 	if (LCD_Status == LCD_NOT_INITIALIZED)
 	{
@@ -195,7 +195,7 @@ ERROR_STATUS_t LCD_vidWriteNumber(uint32_t num)
 		uint32_t reversed = 1;
 		if (num == 0)
 		{
-			LCD_vidWriteData('0');
+			LCD_WriteData('0');
 		}
 		else
 		{
@@ -206,7 +206,7 @@ ERROR_STATUS_t LCD_vidWriteNumber(uint32_t num)
 			}
 			while (reversed != 1)
 			{
-				LCD_vidWriteData(((reversed % 10) + '0'));
+				LCD_WriteData(((reversed % 10) + '0'));
 				reversed /= 10;
 			}
 		}
@@ -215,7 +215,7 @@ ERROR_STATUS_t LCD_vidWriteNumber(uint32_t num)
 }
 
 // function that sets the postion that u want to write in
-ERROR_STATUS_t LCD_vidSetPosition(uint8_t row, uint8_t col)
+ERROR_STATUS_t LCD_SetPosition(uint8_t row, uint8_t col)
 {
 	if (LCD_Status == LCD_NOT_INITIALIZED)
 	{
@@ -234,13 +234,13 @@ ERROR_STATUS_t LCD_vidSetPosition(uint8_t row, uint8_t col)
 			adrs += (64 + col);
 			break;
 		}
-		LCD_vidWriteCommand(adrs);
+		LCD_WriteCommand(adrs);
 		return E_OK;
 	}
 }
 
 // function to clear the LCD
-ERROR_STATUS_t LCD_vidClear(void)
+ERROR_STATUS_t LCD_Clear(void)
 {
 	if (LCD_Status == LCD_NOT_INITIALIZED)
 	{
@@ -249,7 +249,7 @@ ERROR_STATUS_t LCD_vidClear(void)
 	}
 	else
 	{
-		LCD_vidWriteCommand(0b00000001);
+		LCD_WriteCommand(0b00000001);
 		_delay_us(500);
 		return E_OK;
 	}

@@ -30,12 +30,12 @@
 /*******************************************************************************
  *                      Function Prototypes                                    *
  *******************************************************************************/
-ERROR_STATUS_t LCD_vidInit(void);
-ERROR_STATUS_t LCD_vidWriteCommand(uint8_t command);
-ERROR_STATUS_t LCD_vidWriteData(uint8_t data);
-ERROR_STATUS_t LCD_vidWriteString(uint8_t*string);
-ERROR_STATUS_t LCD_vidWriteNumber(uint32_t num);
-ERROR_STATUS_t LCD_vidSetPosition(uint8_t row,uint8_t col);
-ERROR_STATUS_t LCD_vidClear(void);
+ERROR_STATUS_t LCD_Init(void);
+ERROR_STATUS_t LCD_WriteCommand(uint8_t command);
+ERROR_STATUS_t LCD_WriteData(uint8_t data);
+ERROR_STATUS_t LCD_WriteString(uint8_t*string);
+ERROR_STATUS_t LCD_WriteNumber(uint32_t num);
+ERROR_STATUS_t LCD_SetPosition(uint8_t row,uint8_t col);
+ERROR_STATUS_t LCD_Clear(void);
 
 #endif /* LCD_H_ */
