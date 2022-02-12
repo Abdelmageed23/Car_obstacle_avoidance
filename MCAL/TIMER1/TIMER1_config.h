@@ -22,7 +22,7 @@
  	 	 	 	 	 	 9-EXTERNALCLK_RISING //// only for timer0
  	 	 	 	 	 	 */
 
-#define PRESCALAR1	DIV_8
+#define PRESCALAR1	DIV_1
 
 
 
