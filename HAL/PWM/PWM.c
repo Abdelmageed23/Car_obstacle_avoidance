@@ -3,10 +3,10 @@
 /* Date     : 10/1/2022            */
 /* Version  : V01                 */
 /**********************************/
-#include "../STD_TYPES.h"
-#include "../BIT_MATH.h"
-#include "../TIMER/Timer.h"
-#include "../DIO/Dio.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../../LIB/BIT_MATH.h"
+#include "../../MCAL/TIMER/Timer.h"
+#include "../../MCAL/DIO/DIO_interface.h"
 #include "PWM.h"
 #include "PWMconfig.h"
 
@@ -14,13 +14,15 @@
 static uint8_t PWM_timer_count = 0;
 static uint8_t PWM_dutyCycle=0;
 
-void PWM_vidInit(void){
+ERROR_STATUS_t PWM_vidInit(void){
+    ERROR_STATUS_t status = E_OK;
     SetCallBack_Timer0OVF(PWM_vidstart);
-    TIMER_vidTimer0Init();
-    DIO_SETpinDir(PWM_PORT1 , PWM_PIN1 , OUTPUT );
-    DIO_SETpinDir(PWM_PORT2 , PWM_PIN2 , OUTPUT );
+    status&= TIMER_vidTimer0Init();
+    status&= DIO_SETpinDir(PWM_PORT1 , PWM_PIN1 , DIO_OUTPUT );
+    status&= DIO_SETpinDir(PWM_PORT2 , PWM_PIN2 , DIO_OUTPUT );
    // DIO_vidSetPinDirection(PWM_PORT3 , PWM_PIN3 , OUTPUT );
-    TIMER_vidTimer0Start(PWM_INTIAL_TIMER_VALUE);
+    status&= TIMER_vidTimer0Start(PWM_INTIAL_TIMER_VALUE);
+    return status;
 }
 
 // the callback function when the timer overflow 
@@ -49,6 +51,7 @@ void PWM_vidstart(void)
 }
 
 //function to change dutycycle
-void PWM_SetDutyCycle(uint8_t dutyc){
+ERROR_STATUS_t PWM_SetDutyCycle(uint8_t dutyc){
     PWM_dutyCycle = dutyc;
+    return E_OK;
 }

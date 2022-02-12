@@ -3,10 +3,10 @@
 /* Date     : 18/1/2022           */
 /* Version  : V01                 */
 /**********************************/
-#include "../../01-LIB/01-STD_TYPES/STD_TYPES.h"
-#include "../../01-LIB/02-BIT_MATH/BIT_MATH.h"
-#include "../../01-LIB/03-DET/Det.h"
-#include "../../02-MCAL/DIO/Dio.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../../LIB/BIT_MATH.h"
+#include "../../LIB/DET/Det.h"
+#include "../../MCAL/DIO/DIO_interface.h"
 #include <util/delay.h>
 #include "LCD_cfg.h"
 #include "LCD.h"
@@ -29,13 +29,13 @@ ERROR_STATUS_t LCD_vidInit(void)
 		if (LCD_init_state == STATE_A)
 		{
 			// setting the pins direction
-			DIO_SETpinDir(LCD_Port, LCD_RS, OUTPUT);
-			DIO_SETpinDir(LCD_Port, LCD_RW, OUTPUT);
-			DIO_SETpinDir(LCD_Port, LCD_E, OUTPUT);
-			DIO_SETpinDir(LCD_Port, LCD_D4, OUTPUT);
-			DIO_SETpinDir(LCD_Port, LCD_D5, OUTPUT);
-			DIO_SETpinDir(LCD_Port, LCD_D6, OUTPUT);
-			DIO_SETpinDir(LCD_Port, LCD_D7, OUTPUT);
+			DIO_SETpinDir(LCD_Port, LCD_RS, DIO_OUTPUT);
+			DIO_SETpinDir(LCD_Port, LCD_RW, DIO_OUTPUT);
+			DIO_SETpinDir(LCD_Port, LCD_E,  DIO_OUTPUT);
+			DIO_SETpinDir(LCD_Port, LCD_D4, DIO_OUTPUT);
+			DIO_SETpinDir(LCD_Port, LCD_D5, DIO_OUTPUT);
+			DIO_SETpinDir(LCD_Port, LCD_D6, DIO_OUTPUT);
+			DIO_SETpinDir(LCD_Port, LCD_D7, DIO_OUTPUT);
 			if (DELAY_start(50) == E_NOK)
 			{
 				return E_NOK;
@@ -48,15 +48,15 @@ ERROR_STATUS_t LCD_vidInit(void)
 			DELAY_isExpired(&expired);
 			if (expired == TRUE)
 			{
-				DIO_vidSetPinValue(LCD_Port, LCD_RS, 0);
-				DIO_vidSetPinValue(LCD_Port, LCD_RW, 0);
-				DIO_vidSetPinValue(LCD_Port, LCD_D4, 0);
-				DIO_vidSetPinValue(LCD_Port, LCD_D5, 1);
-				DIO_vidSetPinValue(LCD_Port, LCD_D6, 0);
-				DIO_vidSetPinValue(LCD_Port, LCD_D7, 0);
-				DIO_vidSetPinValue(LCD_Port, LCD_E, STD_HIGH);
+				DIO_SETpinVal(LCD_Port, LCD_RS, 0);
+				DIO_SETpinVal(LCD_Port, LCD_RW, 0);
+				DIO_SETpinVal(LCD_Port, LCD_D4, 0);
+				DIO_SETpinVal(LCD_Port, LCD_D5, 1);
+				DIO_SETpinVal(LCD_Port, LCD_D6, 0);
+				DIO_SETpinVal(LCD_Port, LCD_D7, 0);
+				DIO_SETpinVal(LCD_Port, LCD_E, STD_HIGH);
 				_delay_us(250);
-				DIO_vidSetPinValue(LCD_Port, LCD_E, STD_LOW);
+				DIO_SETpinVal(LCD_Port, LCD_E, STD_LOW);
 
 				_delay_us(500);
 				LCD_Status = LCD_INITIALIZED;

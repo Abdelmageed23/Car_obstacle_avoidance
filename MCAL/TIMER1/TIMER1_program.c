@@ -1,0 +1,88 @@
+#include "../../LIB/STD_TYPES.h"
+#include "../../LIB/BIT_MATH.h"
+
+#include "TIMER1_register.h"
+#include "TIMER1_private.h"
+#include "TIMER1_config.h"
+#include "TIMER1_interface.h"
+
+void (*CALL_BACK)(void);
+
+void Timer1_init(void)
+{
+	/*Normal Mode*/
+	CLR_BIT(TIMER1_TCCR1A,TCCR1A_WGM10);
+	CLR_BIT(TIMER1_TCCR1A,TCCR1A_WGM11);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_WGM12);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_WGM13);
+}
+
+void Timer1_start(void)
+{
+	/*Clear TCNT to start from 0*/
+	TIMER1_TCNT = TCNT_CLR;
+
+	/*Prescalar Select*/
+#if PRESCALAR1 == DIV_1
+	SET_BIT(TIMER1_TCCR1B,TCCR1B_CS10);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS11);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS12);
+#elif PRESCALAR1 == DIV_8
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS10);
+	SET_BIT(TIMER1_TCCR1B,TCCR1B_CS11);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS12);
+#elif PRESCALAR1 == DIV_64
+	SET_BIT(TIMER1_TCCR1B,TCCR1B_CS10);
+	SET_BIT(TIMER1_TCCR1B,TCCR1B_CS11);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS12);
+#elif PRESCALAR1 == DIV_256
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS10);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS11);
+	SET_BIT(TIMER1_TCCR1B,TCCR1B_CS12);
+#elif PRESCALAR1 == DIV_1024
+	SET_BIT(TIMER1_TCCR1B,TCCR1B_CS10);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS11);
+	SET_BIT(TIMER1_TCCR1B,TCCR1B_CS12);
+#endif
+
+	/*Timer overflow interrupt Enable*/
+	SET_BIT(TIMER1_TIMSK,TIMSK_TOIE1);
+}
+
+ERROR_STATUS_t Timer1_GetVal(unint16_t* u16_Time)
+{
+	if(u16_Time != NULL)
+	{
+		*u16_Time=TIMER1_TCNT;
+		return E_OK;
+	}
+	else
+	{
+		return E_NOK;
+	}
+}
+
+void Timer1_stop(void)
+{
+	/*Clear PRESCALAR to Stop timer*/
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS10);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS11);
+	CLR_BIT(TIMER1_TCCR1B,TCCR1B_CS12);
+
+	/*Timer overflow interrupt Disable*/
+	CLR_BIT(TIMER1_TIMSK,TIMSK_TOIE1);
+}
+
+void TIMER1_CallBack(void (*TIMER_ISR)(void))
+{
+	CALL_BACK = TIMER_ISR;
+}
+
+void __vector_9(void)	__attribute__((signal));
+void __vector_9(void)
+{
+	if(CALL_BACK != NULL)
+	{
+		CALL_BACK();
+	}
+}

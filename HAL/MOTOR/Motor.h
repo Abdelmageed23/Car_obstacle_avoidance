@@ -20,8 +20,8 @@ MOTOR 2 DIR B PIN 7
 #define MOTOR_1 0
 #define MOTOR_2 1
 /**MACROS FOR USAGE IN DIR***/
-#define FWD HIGH
-#define REV LOW
+#define FWD 1
+#define REV 0
 /*
 typedef enum
 {
