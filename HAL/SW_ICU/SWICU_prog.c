@@ -1,8 +1,8 @@
-#include "STD_TYPES.h"
+#include "../../LIB/STD_TYPES.h"
 
-#include "EXTI_interface.h"
-#include "SREG.h"
-#include "TIMER1_interface.h"
+#include "../../MCAL/EXTI/EXTI_interface.h"
+#include "../../MCAL/Interrupt/Interrupt_interface.h"
+#include "../../MCAL/TIMER1/TIMER1_interface.h"
 
 #include "SWICU_private.h"
 #include "SWICU_config.h"
@@ -39,7 +39,7 @@ static void SW_ICU_ISR(void)
 void SW_ICU_init(void)
 {
 	Timer1_init();
-	SREG_Enable();
+	GlobalInerruptEnable();
 }
 
 ERROR_STATUS_t SW_ICUCounts(uint32_t* u32_counts)
