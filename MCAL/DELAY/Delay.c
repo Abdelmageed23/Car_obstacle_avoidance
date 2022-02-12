@@ -46,7 +46,7 @@ void DELAY_init(void)
 	SREG|=(HIGH<<GLOBAL_INTERRUPT_ENABLE);
 }
 //yehia
-ERROR_STATUS_t DELAY_start(uint16_t ms)
+ERROR_STATUS_t DELAY_start(unint16_t ms)
 {
 	uint32_t u32_totalTicks;
 	

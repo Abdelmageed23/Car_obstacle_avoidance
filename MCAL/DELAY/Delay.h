@@ -10,7 +10,7 @@ typedef enum
 */
 
 void DELAY_init(void);
-ERROR_STATUS_t DELAY_start(uint16_t ms);
+ERROR_STATUS_t DELAY_start(unint16_t ms);
 void DELAY_stop(void);
 ERROR_STATUS_t DELAY_isExpired();
 
