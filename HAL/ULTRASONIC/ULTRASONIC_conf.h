@@ -1,0 +1,18 @@
+/*
+ * ULTRASONIC_conf.h
+ *
+ * Created: 2/12/2022 1:19:51 PM
+ *  Author: No. 01
+ */ 
+
+
+#ifndef ULTRASONIC_CONF_H_
+#define ULTRASONIC_CONF_H_
+
+#define ULTRASONIC_PORT DIO_PORTB
+#define ULTRASONIC_TRIGGER DIO_PIN1
+#define ULTRASONIC_ECHO DIO_PIN2
+
+
+
+#endif /* ULTRASONIC_CONF_H_ */
