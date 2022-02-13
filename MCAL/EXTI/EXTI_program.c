@@ -7,8 +7,8 @@
 /**********************************************************************/
 /**********************************************************************/
 
-#include "STD_TYPES.h"
-#include "BIT_MATH.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../../LIB/BIT_MATH.h"
 
 #include "EXTI_register.h"
 #include "EXTI_private.h"
