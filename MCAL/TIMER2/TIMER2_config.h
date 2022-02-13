@@ -1,5 +1,5 @@
-#ifndef _TIMERS_CONFIG_H_
-#define _TIMERS_CONFIG_H_
+#ifndef _TIMER2_CONFIG_H_
+#define _TIMER2_CONFIG_H_
 
 
 /*Select a TIMER Mode:
@@ -7,7 +7,7 @@
 						2-PWM_PHASE_CORRECT
 						3-CTC
 						4-PWM_FAST*/
-#define MODE1	NORMAL
+#define MODE2			NORMAL
 
 
 /*Select the prescalar:
@@ -18,11 +18,9 @@
  	 	 	 	 	 	 5-DIV_128 //For timer2 only.
  	 	 	 	 	 	 6-DIV_256
  	 	 	 	 	 	 7-DIV_1024
- 	 	 	 	 	 	 8-EXTERNALCLK_FALLING // only for timer0
- 	 	 	 	 	 	 9-EXTERNALCLK_RISING //// only for timer0
  	 	 	 	 	 	 */
 
-#define PRESCALAR1	DIV_1
+#define PRESCALAR2		DIV_1024
 
 
 

@@ -7,8 +7,8 @@
 /**********************************************************************/
 /**********************************************************************/
 
-#include "../../LIB/STD_TYPES.h"
-#include "../../LIB/BIT_MATH.h"
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
 
 #include "EXTI_register.h"
 #include "EXTI_private.h"
@@ -209,8 +209,8 @@ void __vector_1(void)
 	}
 }
 
-void __vector_3(void)	__attribute__((signal));
-void __vector_3(void)
+void __vector_2(void)	__attribute__((signal));
+void __vector_2(void)
 {
 	if(CALL_BACK != NULL)
 	{
@@ -222,8 +222,8 @@ void __vector_3(void)
 	}
 }
 
-void __vector_5(void)	__attribute__((signal));
-void __vector_5(void)
+void __vector_3(void)	__attribute__((signal));
+void __vector_3(void)
 {
 	if(CALL_BACK != NULL)
 	{
