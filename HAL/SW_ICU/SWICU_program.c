@@ -46,7 +46,7 @@ ERROR_STATUS_t SW_ICUCounts(uint32_t* u32_counts)
 	EXTI_CallBack(&SW_ICU_ISR);
 	if(global_u8ICUFlag == E_OK)
 	{
-		u32_counts=(global_u8TimerFlags*TIMER2OV_counts)+global_u8TimerCounts;
+		*u32_counts=(global_u8TimerFlags*TIMER2OV_counts)+global_u8TimerCounts;
 		global_u8TimerFlags = Initial_zero;
 		return E_OK;
 	}
