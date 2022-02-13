@@ -1,6 +1,6 @@
 /**********************************/
 /* Author   : Abdalla Abdelhafiz  */
-/* Date     : 10/1/2022            */
+/* Date     : 10/1/2022           */
 /* Version  : V01                 */
 /**********************************/
 #include "../../LIB/STD_TYPES.h"
@@ -10,18 +10,21 @@
 #include "PWM.h"
 #include "PWMconfig.h"
 
+// this function must be set as a the callback for timer interupt
+// to start generating pwm on the configured pins
+void PWM_vidstart(void);           
 
 static uint8_t PWM_timer_count = 0;
 static uint8_t PWM_dutyCycle=0;
 
-ERROR_STATUS_t PWM_vidInit(void){
+ERROR_STATUS_t PWM_Init(void){
     ERROR_STATUS_t status = E_OK;
     SetCallBack_Timer0OVF(PWM_vidstart);
-    status&= TIMER_vidTimer0Init();
+    status&= TIMER0_Init();
     status&= DIO_SETpinDir(PWM_PORT1 , PWM_PIN1 , DIO_OUTPUT );
     status&= DIO_SETpinDir(PWM_PORT2 , PWM_PIN2 , DIO_OUTPUT );
    // DIO_vidSetPinDirection(PWM_PORT3 , PWM_PIN3 , OUTPUT );
-    status&= TIMER_vidTimer0Start(PWM_INTIAL_TIMER_VALUE);
+    status&= TIMER0_Start(PWM_INTIAL_TIMER_VALUE);
     return status;
 }
 
