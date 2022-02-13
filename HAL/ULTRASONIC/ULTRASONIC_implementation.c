@@ -7,6 +7,10 @@
 #define F_CPU 8000000UL
 #include "../../LIB/STD_TYPES.h"
 #include "../../MCAL/DIO/DIO_interface.h"
+#include "../../MCAL/DELAY/Delay.h"
+#include "../../HAL/SW_ICU/SWICU_interface.h"
+#include "ULTRASONIC_conf.h"
+#include "ULTRASONIC_interface.h"
 #include<util/delay.h>
 
 static uint8_t u8_trigFlag=FALSE;
@@ -20,7 +24,7 @@ ERROR_STATUS_t ULTRASONIC_init(void)
 {
 	if((E_OK==DIO_SETpinDir(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_OUTPUT))&&(E_OK==DIO_SETpinDir(ULTRASONIC_PORT,ULTRASONIC_ECHO,DIO_INPUT)))
 	{
-		//SW_ICU_init();
+		SW_ICU_init();
 		return E_OK;
 	}
 	else
@@ -32,13 +36,13 @@ ERROR_STATUS_t ULTRASONIC_init(void)
 
 ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
 {
-	unint16_t u32_numTicks; 
+	uint32_t u32_numTicks; 
 	if((!u8_trigFlag)&&(u8_delayFlag))
 	{
 		DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_HIGH);
 		_delay_us(15);
 		DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_LOW);	
-		//DELAY_ms(60);
+		DELAY_start(60);
 		u8_trigFlag=TRUE;
 		u8_delayFlag=FALSE;
 		u8_measuredFlag=FALSE;
@@ -46,19 +50,27 @@ ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
 	}
 	else if((!u8_delayFlag)&&(!u8_measuredFlag))
 	{
-		if(//E_OK==ICU_getcounts(&u32_numTicks))
+		if(E_OK==SW_ICUCounts(&u32_numTicks))
 		{
 			*u16_distance=u32_numTicks/TICK_TO_CM_DIVISOR;
 			u8_measuredFlag=TRUE;	
 			return E_OK;
 		}
+		else
+		{
+			return E_NOK;
+		}
 	}
 	else if((u8_trigFlag)&&(u8_measuredFlag))
 	{
-		if(//E_OK==isExpired())
+		if(E_OK==DELAY_isExpired())
 		{
 			u8_delayFlag=TRUE;
 			u8_trigFlag=FALSE;
+			return E_NOK;
+		}
+		else
+		{
 			return E_NOK;
 		}
 	}
