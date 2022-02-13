@@ -7,17 +7,24 @@
 
 #include "../LIB/STD_types.h"
 #include "../MCAL/Interrupt/Interrupt_interface.h"
+#include "../MCAL/DELAY/Delay.h"
 #include "../HAL/MOTOR/Motor.h"
+#include "../HAL/ULTRASONIC/ULTRASONIC_interface.h"
+#include "../HAL/LCD/LCD.h"
 #include "APP.h"
 #include "APP_private.h"
+
+ERROR_STATUS_t Robot_Init(void);
+ERROR_STATUS_t Robot_Move(uint8_t Direction, uint8_t Speed);
+ERROR_STATUS_t Robot_Stop(void);
 /*******************************************************************************
  *                     Function Implementation                                 *
  *******************************************************************************/
 void APP_vidInit(void)
 {
 	Robot_Init();
-	LCD_vidInit();
-	Ultrasonic_init();
+	LCD_Init();
+	ULTRASONIC_init();
 	GlobalInerruptEnable();							////////////////////////////////////////////
 }
 void APP_vidStart(void)
@@ -26,29 +33,29 @@ void APP_vidStart(void)
 	while (1)
 	{
 		/* code */
-		UltrasonicGetDis(&Object_Distance);
+		ULTRASONIC_GetDis(&Object_Distance);
 		if(Object_Distance >= 50)
 		{
 			Robot_Move(FORWARD,80);
-			LCD_vidWriteString("FORWARD");
+			LCD_WriteString("FORWARD");
 		}
 		else if(Object_Distance<50 && Object_Distance >=32)
 		{
 			Robot_Move(FORWARD,30);
-			LCD_vidWriteString("FORWARD");
+			LCD_WriteString("FORWARD");
 		}
 		else if(Object_Distance<32 && Object_Distance >=28)
 			{
 				Robot_Move(RIGHT,30);
-				LCD_vidWriteString("RIGHT");
+				LCD_WriteString("RIGHT");
 			}
 		else if (Object_Distance<=28)
 		{
 			Robot_Move(BACKWORD,30);
-			LCD_vidWriteString("BACKWORD");
+			LCD_WriteString("BACKWORD");
 		}
-		LCD_vidSetPosition(1,4);
-		LCD_vidWriteNumber(Object_Distance);
+		LCD_SetPosition(1,4);
+		LCD_WriteNumber(Object_Distance);
 	}
 	
 }

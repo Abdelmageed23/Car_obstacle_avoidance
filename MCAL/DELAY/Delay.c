@@ -4,6 +4,7 @@
 /* Version  : V01                 */
 /**********************************/
 #include "../../LIB/STD_TYPES.h"
+#include "../../LIB/BIT_MATH.h"
 #include "Delay_Regs.h"
 #include "Delay.h"
 
