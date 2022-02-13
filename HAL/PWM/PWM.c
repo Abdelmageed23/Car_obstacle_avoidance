@@ -14,7 +14,7 @@
 static uint8_t PWM_timer_count = 0;
 static uint8_t PWM_dutyCycle=0;
 
-ERROR_STATUS_t PWM_vidInit(void){
+ERROR_STATUS_t PWM_Init(void){
     ERROR_STATUS_t status = E_OK;
     SetCallBack_Timer0OVF(PWM_vidstart);
     status&= TIMER_vidTimer0Init();
