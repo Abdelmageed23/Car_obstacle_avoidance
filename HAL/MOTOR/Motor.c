@@ -14,18 +14,27 @@
 
 ERROR_STATUS_t MOTOR_init(uint8_t numMotor)// numMotor (initialize Direction pins only (PWM initializes enable pins inside them))
 {
-	PWM_vidInit();
 	if(MOTOR_1==numMotor)
 	{
-		DIO_SETpinDir(MOTOR_PORT,MOTOR_DIR_1A,DIO_OUTPUT);
-		DIO_SETpinDir(MOTOR_PORT,MOTOR_DIR_1B,DIO_OUTPUT);
-		return E_OK;
+		if((E_OK==DIO_SETpinDir(MOTOR_PORT,MOTOR_DIR_1A,DIO_OUTPUT))&&(E_OK==DIO_SETpinDir(MOTOR_PORT,MOTOR_DIR_1B,DIO_OUTPUT)))
+		{
+			return PWM_Init();			
+		}
+		else
+		{
+			return E_NOK;
+		}
 	}
 	else if(MOTOR_2==numMotor)
 	{
-		DIO_SETpinDir(MOTOR_PORT,MOTOR_DIR_2A,DIO_OUTPUT);
-		DIO_SETpinDir(MOTOR_PORT,MOTOR_DIR_2B,DIO_OUTPUT);
-		return E_OK;
+		if((E_OK==DIO_SETpinDir(MOTOR_PORT,MOTOR_DIR_2A,DIO_OUTPUT))&&(E_OK==DIO_SETpinDir(MOTOR_PORT,MOTOR_DIR_2B,DIO_OUTPUT)))
+		{
+			return PWM_Init();
+		}
+		else
+		{
+			return E_NOK;
+		}
 	}
 	else
 	{
