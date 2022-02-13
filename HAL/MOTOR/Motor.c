@@ -52,15 +52,25 @@ ERROR_STATUS_t MOTOR_direction(uint8_t numMotor, uint8_t DIR)//  numMotor/(FWD,R
 	{
 		if(FWD==DIR)
 		{
-			DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1A,DIO_HIGH);
-			DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1B,DIO_LOW);
-			return E_OK;
+			if((E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1A,DIO_HIGH))&&(E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1B,DIO_LOW)))
+			{
+				return E_OK;
+			}
+			else 
+			{
+				return E_NOK;
+			}
 		}
 		else if(REV==DIR)
 		{
-			DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1A,DIO_LOW);
-			DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1B,DIO_HIGH);
-			return E_OK;	
+			if((E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1A,DIO_LOW))&&(E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1B,DIO_HIGH)))
+			{
+				return E_OK;
+			}
+			else
+			{
+				return E_NOK;
+			}	
 		}
 		else
 		{
@@ -71,15 +81,25 @@ ERROR_STATUS_t MOTOR_direction(uint8_t numMotor, uint8_t DIR)//  numMotor/(FWD,R
 	{
 		if(FWD==DIR)
 		{
-			DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2A,DIO_HIGH);
-			DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2B,DIO_LOW);
-			return E_OK;
+			if((E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2A,DIO_HIGH))&&(E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2B,DIO_LOW)))
+			{
+				return E_OK;
+			}
+			else
+			{
+				return E_NOK;
+			}
 		}
 		else if(REV==DIR)
 		{
-			DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2A,DIO_LOW);
-			DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2B,DIO_HIGH);
-			return E_OK;
+			if((E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2A,DIO_LOW))&&(E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2B,DIO_HIGH)))
+			{
+				return E_OK;
+			}
+			else
+			{
+				return E_NOK;
+			}
 		}
 		else
 		{
@@ -97,15 +117,25 @@ ERROR_STATUS_t MOTOR_off(uint8_t numMotor)// stop specified motor (writes LOW on
 {
 	if(MOTOR_1==numMotor)
 	{
-		DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1A,DIO_LOW);
-		DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1B,DIO_LOW);
-		return E_OK;
+		if((E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1A,DIO_LOW))&&(E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_1B,DIO_LOW)))
+		{
+			return E_OK;
+		}
+		else
+		{
+			return E_NOK;
+		}
 	}
 	else if(MOTOR_2==numMotor)
 	{
-		DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2A,DIO_LOW);
-		DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2B,DIO_LOW);
-		return E_OK;
+		if((E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2A,DIO_LOW))&&(E_OK==DIO_SETpinVal(MOTOR_PORT,MOTOR_DIR_2B,DIO_LOW)))
+		{
+			return E_OK;
+		}
+		else
+		{
+			return E_NOK;
+		}
 	}
 	else
 	{
