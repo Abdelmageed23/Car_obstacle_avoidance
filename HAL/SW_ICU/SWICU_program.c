@@ -1,9 +1,6 @@
 #include "../../LIB/STD_TYPES.h"
-
 #include "../../MCAL/EXTI/EXTI_interface.h"
 #include "../../MCAL/TIMER2/TIMER2_interface.h"
-#include "../../MCAL/TIMER2/TIMER2_register.h"
-
 #include "SWICU_private.h"
 #include "SWICU_config.h"
 #include "SWICU_interface.h"
