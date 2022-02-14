@@ -25,6 +25,7 @@ ERROR_STATUS_t ULTRASONIC_init(void)
 	if((E_OK==DIO_SETpinDir(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_OUTPUT))&&(E_OK==DIO_SETpinDir(ULTRASONIC_PORT,ULTRASONIC_ECHO,DIO_INPUT)))
 	{
 		SW_ICU_init();
+		DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_ECHO,DIO_LOW);
 		return E_OK;
 	}
 	else
@@ -33,14 +34,34 @@ ERROR_STATUS_t ULTRASONIC_init(void)
 	}
 }
 
-
-ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
+// void ULTRASONIC_sendTrig()
+// {
+// 	DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_HIGH);
+// 	_delay_us(15);
+// 	DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_LOW);
+// }
+// 
+// void ULTRASONIC_GetDis(unint16_t* u16_distance)
+// {	
+// 	uint32_t u32_numTicks;
+// 	if(E_OK==SW_ICUCounts(&u32_numTicks))
+// 	{
+// 		*u16_distance=u32_numTicks/TICK_TO_CM_DIVISOR;
+// 		//*u16_distance=u32_numTicks;
+// 		return
+// 	}
+// 	else
+// 	{
+// 		return E_NOK;
+// 	}
+// }
+ ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
 {
 	uint32_t u32_numTicks; 
 	if((!u8_trigFlag)&&(u8_delayFlag))
 	{
 		DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_HIGH);
-		_delay_us(15);
+		_delay_us(20);
 		DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_LOW);	
 		DELAY_start(60);
 		u8_trigFlag=TRUE;
@@ -52,7 +73,8 @@ ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
 	{
 		if(E_OK==SW_ICUCounts(&u32_numTicks))
 		{
-			*u16_distance=u32_numTicks/TICK_TO_CM_DIVISOR;
+			//*u16_distance=u32_numTicks/TICK_TO_CM_DIVISOR;
+			*u16_distance=u32_numTicks/58;
 			u8_measuredFlag=TRUE;	
 			return E_OK;
 		}
@@ -80,3 +102,11 @@ ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
 	}
 	
 }
+// ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
+	// {
+	// 	uint32_t u32_numTicks;
+	// 	
+	// 	DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_HIGH);
+	// 	_delay_us(15);
+	// 	DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_LOW);
+	// 	

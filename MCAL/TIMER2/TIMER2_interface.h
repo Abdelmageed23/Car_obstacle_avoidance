@@ -9,6 +9,8 @@ ERROR_STATUS_t Timer2_GetVal(uint8_t* u8_Time);
 
 void TIMER2_CallBack(void (*TIMER_ISR)(void));
 
+void TIMER2_clear(void);
+
 void Timer2_stop(void);
 
 #endif

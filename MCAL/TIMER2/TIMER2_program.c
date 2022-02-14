@@ -6,7 +6,9 @@
 #include "TIMER2_config.h"
 #include "TIMER2_interface.h"
 
-void (*CALL_BACK)(void);
+#define T2_EMPTY 0
+
+void (*CALL_BACK_T2)(void);
 
 void Timer2_init(void)
 {
@@ -32,9 +34,6 @@ void Timer2_init(void)
 
 void Timer2_start(void)
 {
-	/*Clear TCNT to start from 0*/
-	TIMERS_TCNT2 = TCNT_CLR;
-
 	/*Prescalar Select*/
 #if PRESCALAR2 == DIV_1
 	/*select No prescaler*/
@@ -119,16 +118,20 @@ void Timer2_stop(void)
 	}
 }
 
+void TIMER2_clear(void)
+{
+	TIMERS_TCNT2=T2_EMPTY;
+}
 void TIMER2_CallBack(void (*TIMER_ISR)(void))
 {
-	CALL_BACK = TIMER_ISR;
+	CALL_BACK_T2 = TIMER_ISR;
 }
 
 void __vector_5(void)	__attribute__((signal));
 void __vector_5(void)
 {
-	if(CALL_BACK != NULL)
+	if(CALL_BACK_T2 != NULL)
 	{
-		CALL_BACK();
+		CALL_BACK_T2();
 	}
 }

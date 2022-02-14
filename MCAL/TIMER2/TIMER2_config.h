@@ -20,7 +20,7 @@
  	 	 	 	 	 	 7-DIV_1024
  	 	 	 	 	 	 */
 
-#define PRESCALAR2		DIV_1024
+#define PRESCALAR2		DIV_8
 
 
 
