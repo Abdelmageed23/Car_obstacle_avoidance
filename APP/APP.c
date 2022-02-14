@@ -25,7 +25,7 @@ void APP_vidInit(void)
 	Robot_Init();
 
 	ULTRASONIC_init();
-	GlobalInerruptEnable();							////////////////////////////////////////////
+	GlobalInerruptEnable();
 }
 void APP_vidStart(void)
 {

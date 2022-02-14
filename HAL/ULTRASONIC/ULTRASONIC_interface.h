@@ -10,6 +10,7 @@
 #define ULTRASONIC_INTERFACE_H_
 
 ERROR_STATUS_t ULTRASONIC_init(void);
+void ULTRASONIC_sendTrig();
 ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance);
 
 
