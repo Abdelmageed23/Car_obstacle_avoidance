@@ -14,4 +14,11 @@ void APP_vidStart(void);
 #define RIGHT	3
 #define LEFT 4
 
+
+
+#define State_A	1
+#define State_B	2
+#define State_C	3
+#define State_D	4
+
 #endif
