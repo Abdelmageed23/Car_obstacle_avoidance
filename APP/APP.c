@@ -23,38 +23,66 @@ ERROR_STATUS_t Robot_Stop(void);
 void APP_vidInit(void)
 {
 	Robot_Init();
-	LCD_Init();
+
 	ULTRASONIC_init();
 	GlobalInerruptEnable();							////////////////////////////////////////////
 }
 void APP_vidStart(void)
 {
 	unint16_t Object_Distance =0;
+	uint8_t state =State_A;
+
 	while (1)
 	{
+		LCD_Init();
 		/* code */
-		ULTRASONIC_GetDis(&Object_Distance);
+		LCD_SetPosition(0,0);
+
+		while(ULTRASONIC_GetDis(&Object_Distance)!=E_OK);
+
+
+
+
 		if(Object_Distance >= 50)
 		{
-			Robot_Move(FORWARD,80);
-			LCD_WriteString("FORWARD");
+			if(state != State_A)
+			{
+				Robot_Move(FORWARD,80);
+				LCD_WriteString("FORWARD");
+				state = State_A;
+			}
+
 		}
 		else if(Object_Distance<50 && Object_Distance >=32)
 		{
+			if(state != State_B)
+			{
 			Robot_Move(FORWARD,30);
 			LCD_WriteString("FORWARD");
+				state = State_B;
+			}
 		}
 		else if(Object_Distance<32 && Object_Distance >=28)
 			{
+
 				Robot_Move(RIGHT,30);
 				LCD_WriteString("RIGHT");
+				state = State_C;
+
 			}
 		else if (Object_Distance<=28)
 		{
-			Robot_Move(BACKWORD,30);
-			LCD_WriteString("BACKWORD");
+			if(state != State_D)
+			{
+				Robot_Move(BACKWORD,30);
+				LCD_WriteString("BACKWARD");
+				state = State_D;
+			}
+
 		}
-		LCD_SetPosition(1,4);
+		LCD_SetPosition(1,0);
+		LCD_WriteString("    ");
+		LCD_SetPosition(1,0);
 		LCD_WriteNumber(Object_Distance);
 	}
 	
@@ -110,18 +138,18 @@ ERROR_STATUS_t Robot_Move(uint8_t Direction, uint8_t Speed)
 			 MOTOR_direction(MOTOR_2, REV);
 			 break;
 		case RIGHT:
-			 MOTOR_speed(Speed);
+			 MOTOR_speed(60);
 			 MOTOR_direction(MOTOR_1, FWD);
 			 MOTOR_direction(MOTOR_2, REV);
-			 DELAY_start(300);					/////////////////////////////////// needed
+			 DELAY_start(600);
 			 while(E_OK !=DELAY_isExpired());
 			 Robot_Stop();
 			 break;
 		case LEFT:
-			 MOTOR_speed(Speed);
+			 MOTOR_speed(60);
 			 MOTOR_direction(MOTOR_1, REV);
 			 MOTOR_direction(MOTOR_2, FWD);
-			 DELAY_start(300);					/////////////////////////////////// needed
+			 DELAY_start(600);
 			 while(E_OK !=DELAY_isExpired());
 			 Robot_Stop();
 			 break;
