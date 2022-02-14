@@ -34,6 +34,7 @@ void Timer2_init(void)
 
 void Timer2_start(void)
 {
+	TIMERS_TCNT2=T2_EMPTY;
 	/*Prescalar Select*/
 #if PRESCALAR2 == DIV_1
 	/*select No prescaler*/
