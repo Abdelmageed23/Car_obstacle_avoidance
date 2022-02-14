@@ -4,6 +4,7 @@
 /* Version  : V01                 */
 /**********************************/
 #include "../../LIB/STD_TYPES.h"
+#include "../../LIB/BIT_MATH.h"
 #include "Delay_Regs.h"
 #include "Delay.h"
 
@@ -55,12 +56,12 @@ ERROR_STATUS_t DELAY_isExpired(void)
 	}
 	else
 	{
-		return NOK;
+		return E_NOK;
 	}
 }
 
 // TIMER1 compA ISR
-void __vector_7(void) __attribute__((signal, __INTR_ATTRS));
+void __vector_7(void) __attribute__((signal, used));
 void __vector_7(void)
 {
 	tot_overflow_T1++;
