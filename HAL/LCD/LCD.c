@@ -3,9 +3,11 @@
 /* Date     : 18/1/2022           */
 /* Version  : V01                 */
 /**********************************/
+#define F_CPU 8000000UL
 #include "../../LIB/STD_TYPES.h"
 #include "../../LIB/BIT_MATH.h"
 #include "../../LIB/DET/Det.h"
+#include "../../MCAL/DELAY/Delay.h"
 #include "../../MCAL/DIO/DIO_interface.h"
 #include <util/delay.h>
 #include "LCD_cfg.h"
@@ -25,7 +27,7 @@ ERROR_STATUS_t LCD_Init(void)
 {
 	if (LCD_Status == LCD_NOT_INITIALIZED)
 	{
-		uint8_t expired;
+		//uint8_t expired;
 		if (LCD_init_state == STATE_A)
 		{
 			// setting the pins direction
@@ -45,8 +47,8 @@ ERROR_STATUS_t LCD_Init(void)
 		}
 		else if (LCD_init_state == STATE_B)
 		{
-			DELAY_isExpired(&expired);
-			if (expired == TRUE)
+			//DELAY_isExpired(&expired);
+			if (E_OK == DELAY_isExpired())
 			{
 				DIO_SETpinVal(LCD_Port, LCD_RS, 0);
 				DIO_SETpinVal(LCD_Port, LCD_RW, 0);
@@ -67,10 +69,11 @@ ERROR_STATUS_t LCD_Init(void)
 				_delay_us(250);
 				LCD_WriteCommand(0b00000001);
 				_delay_us(250);
+				return E_OK;
 			}
 			else
 			{
-				return E_OK;
+				return E_NOK;
 			}
 		}
 		else
