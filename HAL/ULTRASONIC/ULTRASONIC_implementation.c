@@ -20,6 +20,7 @@ static uint8_t u8_measuredFlag=FALSE;
 //calculated by the following equation: 1 / ( TIME FOR 1 TICK * speed of sound in CM/SEC / 2) 
 #define TICK_TO_CM_DIVISOR 466 
 
+/*set pin directions and give trig pin pulse to send ultrasonic waves*/
 ERROR_STATUS_t ULTRASONIC_init(void)
 {
 	if((E_OK==DIO_SETpinDir(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_OUTPUT))&&(E_OK==DIO_SETpinDir(ULTRASONIC_PORT,ULTRASONIC_ECHO,DIO_INPUT)))
@@ -34,27 +35,7 @@ ERROR_STATUS_t ULTRASONIC_init(void)
 	}
 }
 
-// void ULTRASONIC_sendTrig()
-// {
-// 	DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_HIGH);
-// 	_delay_us(15);
-// 	DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_LOW);
-// }
-// 
-// void ULTRASONIC_GetDis(unint16_t* u16_distance)
-// {	
-// 	uint32_t u32_numTicks;
-// 	if(E_OK==SW_ICUCounts(&u32_numTicks))
-// 	{
-// 		*u16_distance=u32_numTicks/TICK_TO_CM_DIVISOR;
-// 		//*u16_distance=u32_numTicks;
-// 		return
-// 	}
-// 	else
-// 	{
-// 		return E_NOK;
-// 	}
-// }
+/*A function that calculate distance*/
  ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
 {
 	uint32_t u32_numTicks; 
@@ -73,7 +54,6 @@ ERROR_STATUS_t ULTRASONIC_init(void)
 	{
 		if(E_OK==SW_ICUCounts(&u32_numTicks))
 		{
-			//*u16_distance=u32_numTicks/TICK_TO_CM_DIVISOR;
 			*u16_distance=u32_numTicks/58;
 			u8_measuredFlag=TRUE;	
 			return E_OK;
@@ -102,11 +82,3 @@ ERROR_STATUS_t ULTRASONIC_init(void)
 	}
 	
 }
-// ERROR_STATUS_t ULTRASONIC_GetDis(unint16_t* u16_distance)
-	// {
-	// 	uint32_t u32_numTicks;
-	// 	
-	// 	DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_HIGH);
-	// 	_delay_us(15);
-	// 	DIO_SETpinVal(ULTRASONIC_PORT,ULTRASONIC_TRIGGER,DIO_LOW);
-	// 	
