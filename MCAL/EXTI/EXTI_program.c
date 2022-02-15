@@ -7,15 +7,15 @@
 /**********************************************************************/
 /**********************************************************************/
 
-#include "STD_TYPES.h"
-#include "BIT_MATH.h"
+#include "../../LIB/STD_TYPES.h"
+#include "../../LIB/BIT_MATH.h"
 
 #include "EXTI_register.h"
 #include "EXTI_private.h"
 #include "EXTI_config.h"
 #include "EXTI_interface.h"
 
-void (*CALL_BACK)(void);
+void (*CALL_BACK_EXTI)(void);
 
 ERROR_STATUS_t EXTI_init(uint8_t u8_INT)
 {
@@ -193,15 +193,15 @@ ERROR_STATUS_t EXTI_Disable(uint8_t u8_INT)
 
 void EXTI_CallBack(void (*ISR)(void))
 {
-		CALL_BACK=ISR;
+		CALL_BACK_EXTI=ISR;
 }
 
 void __vector_1(void)	__attribute__((signal));
 void __vector_1(void)
 {
-	if(CALL_BACK != NULL)
+	if(CALL_BACK_EXTI != NULL)
 	{
-		CALL_BACK();
+		CALL_BACK_EXTI();
 	}
 	else
 	{
@@ -212,9 +212,9 @@ void __vector_1(void)
 void __vector_2(void)	__attribute__((signal));
 void __vector_2(void)
 {
-	if(CALL_BACK != NULL)
+	if(CALL_BACK_EXTI != NULL)
 	{
-		CALL_BACK();
+		CALL_BACK_EXTI();
 	}
 	else
 	{
@@ -225,9 +225,9 @@ void __vector_2(void)
 void __vector_3(void)	__attribute__((signal));
 void __vector_3(void)
 {
-	if(CALL_BACK != NULL)
+	if(CALL_BACK_EXTI != NULL)
 	{
-		CALL_BACK();
+		CALL_BACK_EXTI();
 	}
 	else
 	{
