@@ -17,20 +17,24 @@ uint32_t global_u32TimerFlags=Initial_zero;
 uint8_t global_u8ICUFlag=E_NOK;
 static EN_EXTI_state_t global_EN_EXTI_state=STATE_initial;
 
+/*a local function that counts the over flows*/
 static void TIMER2_ISR(void)
 {
+	/*Increase number or flags that counts overflow*/
 	global_u32TimerFlags++;
 
 }
 
+/*ISR when external interrupt happens in rising edge*/
 void SW_ICU_RISING(void)
 {
 	global_EN_EXTI_state=STATE_rising;
 	Timer2_start();
 	EXTI_EdgeTrig(INT2,FALLING);
 	EXTI_CallBack(SW_ICU_FALLING);
-	
 }
+
+/*ISR when external interrupt happens in falling edge*/
  void SW_ICU_FALLING(void)
 {
 	global_EN_EXTI_state=STATE_falling;
@@ -39,6 +43,7 @@ void SW_ICU_RISING(void)
 	EXTI_CallBack(SW_ICU_RISING);
 }
 
+ /*initialization of timer 2, external interrupt and call back functions*/
 void SW_ICU_init(void)
 {
 	Timer2_init();
@@ -47,6 +52,7 @@ void SW_ICU_init(void)
 	EXTI_CallBack(SW_ICU_RISING);
 }
 
+/*A function that calculate the counts*/
 ERROR_STATUS_t SW_ICUCounts(uint32_t* u32_counts)
 {
 	switch(global_EN_EXTI_state)
